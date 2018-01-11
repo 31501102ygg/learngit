@@ -1,0 +1,363 @@
+using UnityEngine;
+using UnityEditor;
+using UnityEngine.TestTools;
+using NUnit.Framework;
+using System.Collections;
+using UnityEngine.UI;
+
+public class NewEditModeTest {
+   
+    [Test]
+	public void Jump1() {
+        // Use the Assert class to test conditions.
+        PlayerControl playerControl = new PlayerControl();
+        Assert.IsFalse(playerControl.jump);
+        playerControl.grounded = true;
+        playerControl.dash = false;
+        playerControl.jump = true;
+        bool canJump = false;
+
+        if (playerControl.grounded == true&&playerControl.dash == false&&playerControl.jump == true)
+            canJump= true;
+        Assert.IsTrue(canJump);
+    }
+    [Test]
+    public void Jump2()
+    {
+        // Use the Assert class to test conditions.
+        PlayerControl playerControl = new PlayerControl();
+        Assert.IsFalse(playerControl.jump);
+        playerControl.grounded = true;
+        playerControl.dash = true;
+        playerControl.jump = true;
+        bool canJump = false;
+
+        if (playerControl.grounded == true && playerControl.dash == false && playerControl.jump == true)
+            canJump = true;
+        Assert.IsFalse(canJump);
+    }
+
+    [Test]
+    public void Jump3()
+    {
+        // Use the Assert class to test conditions.
+        PlayerControl playerControl = new PlayerControl();
+        Assert.IsFalse(playerControl.jump);
+        playerControl.grounded = false;
+        playerControl.dash = false;
+        playerControl.jump = true;
+        bool canJump = false;
+
+        if (playerControl.grounded == true && playerControl.dash == false && playerControl.jump == true)
+            canJump = true;
+        Assert.IsFalse(canJump);
+    }
+
+    [Test]
+    public void Move1()
+    {
+        PlayerControl playerControl = new PlayerControl();
+        Assert.IsTrue(playerControl.facingRight);
+        float h = 1;
+        if (h > 0 && !playerControl.facingRight)
+        {
+            playerControl.facingRight = true;
+        }
+        else if (h < 0 && playerControl.facingRight)
+        {
+            playerControl.facingRight = false;
+        }
+        Assert.IsTrue(playerControl.facingRight);
+
+    }
+    [Test]
+    public void Move2()
+    {
+        PlayerControl playerControl = new PlayerControl();
+        Assert.IsTrue(playerControl.facingRight);
+        float h = -1;
+        if (h > 0 && !playerControl.facingRight)
+        {
+            playerControl.facingRight = true;
+        }
+        else if (h < 0 && playerControl.facingRight)
+        {
+            playerControl.facingRight = false;
+        }
+        Assert.IsFalse(playerControl.facingRight);
+
+    }
+    [Test]
+    public void Move3()
+    {
+        PlayerControl playerControl = new PlayerControl();
+        Assert.IsTrue(playerControl.facingRight);
+        playerControl.facingRight = false;
+        float h = -1;
+        if (h > 0 && !playerControl.facingRight)
+        {
+            playerControl.facingRight = true;
+        }
+        else if (h < 0 && playerControl.facingRight)
+        {
+            playerControl.facingRight = false;
+        }
+        Assert.IsFalse(playerControl.facingRight);
+
+    }
+    [Test]
+    public void Move4()
+    {
+        PlayerControl playerControl = new PlayerControl();
+        Assert.IsTrue(playerControl.facingRight);
+        playerControl.facingRight = false;
+        float h = 1;
+        if (h > 0 && !playerControl.facingRight)
+        {
+            playerControl.facingRight = true;
+        }
+        else if (h < 0 && playerControl.facingRight)
+        {
+            playerControl.facingRight = false;
+        }
+        Assert.IsTrue(playerControl.facingRight);
+
+    }
+
+    [Test]
+    public void Move5()
+    {
+        PlayerControl playerControl = new PlayerControl();
+        Assert.IsTrue(playerControl.facingRight);
+        playerControl.facingRight = false;
+        float h = 0;
+        if (h > 0 && !playerControl.facingRight)
+        {
+            playerControl.facingRight = true;
+        }
+        else if (h < 0 && playerControl.facingRight)
+        {
+            playerControl.facingRight = false;
+        }
+        Assert.IsFalse(playerControl.facingRight);
+
+    }
+    [Test]
+    public void Attack()
+    {
+        PlayerControl player = new PlayerControl();
+        Assert.IsFalse(player.attack);
+        Button_attack.attack = true;
+        player.attack = Button_attack.attack;
+        Assert.IsTrue(player.attack);
+    }
+
+    [Test]
+    public void FireBall()
+    {
+        PlayerControl player = new PlayerControl();
+        Assert.IsFalse(player.fireballAttack);
+        Button_fire.fireball = true;
+        player.fireballAttack = Button_fire.fireball;
+        Assert.IsTrue(player.fireballAttack);
+    }
+
+    [Test]
+    public void Dash1()
+    {
+        PlayerControl player = new PlayerControl();
+        player.grounded = true;
+        player.dash = true;
+        bool canDash = false;
+        if(player.grounded == true && player.dash == true)
+        {
+            canDash = true;
+        }
+        Assert.IsTrue(canDash);
+    }
+
+    [Test]
+    public void Dash2()
+    {
+        PlayerControl player = new PlayerControl();
+        player.grounded = false;
+        player.dash = true;
+        bool canDash = false;
+        if (player.grounded == true && player.dash == true)
+        {
+            canDash = true;
+        }
+        Assert.IsFalse(canDash);
+    }
+    [Test]
+    public void Button_Attack()
+    {
+        Button_attack.attack = false;
+        Assert.IsFalse(Button_attack.attack);
+        Button_attack button = new Button_attack();
+        button.Click();
+        Assert.IsTrue(Button_attack.attack);
+    }
+
+    [Test]
+    public void Button_Dash()
+    {
+        Button_dash.dash = false;
+        Assert.IsFalse(Button_dash.dash);
+        Button_dash button = new Button_dash();
+        button.Click();
+        Assert.IsTrue(Button_dash.dash);
+    }
+
+    [Test]
+    public void Button_Fire()
+    {
+        Button_fire.fireball = false;
+        Assert.IsFalse(Button_fire.fireball);
+        Button_fire button = new Button_fire();
+        button.Click();
+        Assert.IsTrue(Button_fire.fireball);
+    }
+
+    [Test]
+    public void Button_Jump()
+    {
+        Button_jump.jump = false;
+        Assert.IsFalse(Button_jump.jump);
+        Button_jump button = new Button_jump();
+        button.Click();
+        Assert.IsTrue(Button_jump.jump);
+    }
+
+    [Test]
+    public void Frog_Health1()
+    {
+        // Use the Assert class to test conditions.
+        Frog_Health frog = new Frog_Health();
+        frog.health = 100f;
+        frog.TakeDamage_Test(10f);
+        Assert.AreEqual(90f, frog.health);
+    }
+    [Test]
+    public void Frog_Health2()
+    {
+        // Use the Assert class to test conditions.
+        Frog_Health frog = new Frog_Health();
+        frog.health = 100f;
+        frog.TakeDamage_Test(110f);
+        Assert.AreEqual(0f, frog.health);
+    }
+
+    [Test]
+    public void Player_Health1()
+    {
+        // Use the Assert class to test conditions.
+        PlayerHealth health = new PlayerHealth();
+        health.TakeDamage_T(10f);
+        Assert.AreEqual(90f, health.health);
+    }
+    [Test]
+    public void Player_Health2()
+    {
+        // Use the Assert class to test conditions.
+        PlayerHealth health = new PlayerHealth();
+        health.TakeDamage_T(110f);
+        Assert.AreEqual(0f, health.health);
+    }
+    [Test]
+    public void Player_Health3()
+    {
+        // Use the Assert class to test conditions.
+        PlayerHealth health = new PlayerHealth();
+        health.health = 95f;
+        health.TakeDamage_T(-10f);
+        Assert.AreEqual(100f, health.health);
+    }
+    [Test]
+    public void Player_Health4()
+    {
+        // Use the Assert class to test conditions.
+        PlayerHealth health = new PlayerHealth();
+        health.health = 85f;
+        health.TakeDamage_T(-10f);
+        Assert.AreEqual(95f, health.health);
+    }
+
+
+    [Test]
+    public void Back_Music()
+    {
+        BackMusic backMusic = new BackMusic();
+        float volume_max = 0.5f;
+        float x1 = 1f;
+        float x2 = 0.5f;
+        float x3 = 0.1f;
+        float x4 = 0f;
+        float x5 = -1f;
+        Assert.Less(backMusic.return_Volume(x1,volume_max), 0);
+        Assert.LessOrEqual(backMusic.return_Volume(x2, volume_max), x2);
+        Assert.LessOrEqual(backMusic.return_Volume(x3, volume_max), x3);
+        Assert.LessOrEqual(backMusic.return_Volume(x4, volume_max), x4);
+        Assert.Less(backMusic.return_Volume(x5, volume_max), 0);
+
+    }
+    [Test]
+    public void BackToGame()
+    {
+        BackToGame backToGame = new BackToGame();
+        Assert.IsFalse(backToGame.canBackToGame);
+        backToGame.onClick_T();
+        Assert.IsTrue(backToGame.canBackToGame);
+    }
+    [Test]
+    public void QuitCancel()
+    {
+        QuitCancel quit = new QuitCancel();
+        Assert.IsFalse(quit.Active);
+        quit.onClick_T();
+        Assert.IsTrue(quit.Active);
+    }
+    [Test]
+    public void ToMenu()
+    {
+        ToMenu toMenu = new ToMenu();
+        Assert.IsFalse(toMenu.canToMenu);
+        toMenu.OnClick_T();
+        Assert.IsTrue(toMenu.canToMenu);
+    }
+    [Test]
+    public void ToNewGame()
+    {
+        ToNewGame toNewGame = new ToNewGame();
+        Assert.IsFalse(toNewGame.canToNewGame);
+        toNewGame.OnClick_T();
+        Assert.IsTrue(toNewGame.canToNewGame);
+    }
+    [Test]
+    public void ToSetting()
+    {
+        ToSettings toSetting = new ToSettings();
+        Assert.IsFalse(toSetting.canToSetting);
+        toSetting.onClick_T();
+        Assert.IsTrue(toSetting.canToSetting);
+    }
+    [Test]
+    public void ToStore()
+    {
+        ToStore toStore = new ToStore();
+        Assert.IsFalse(toStore.canToStore);
+        toStore.OnClick_T();
+        Assert.IsTrue(toStore.canToStore);
+    }
+    // A UnityTest behaves like a coroutine in PlayMode
+    // and allows you to yield null to skip a frame in EditMode
+    [UnityTest]
+	public IEnumerator NewEditModeTestWithEnumeratorPasses() {
+        // Use the Assert class to test conditions.
+        // yield to skip a frame
+
+
+
+        yield return null;
+    }
+}
